@@ -38,8 +38,6 @@ function validateForm(options) {
       case 'number':
         if (validatorMin &&
           validatorMax) {
-          //в качестве второго аргумента в метод toggle передаем условия
-          //первым условием проверяем неравенство длины строки нулю, так как Number('') == 0
           let numberMinMaxMatch = value.length === 0 || isNaN(value) ||
             Number(value) < validatorMin || Number(value) > validatorMax;
           this.classList.toggle(inputErrorClass, numberMinMaxMatch);
@@ -57,13 +55,11 @@ function validateForm(options) {
 
   function submitFields(e) {
     e.preventDefault();
-    //проверяем только те элементы, которые имеют мета-атрибут 'data-required'
     inputs.forEach(el => {
       if (el.value.length === 0 && el.dataset.hasOwnProperty('required')) validateInput.call(el);
     });
     const isHasError = elem => elem.classList.contains(inputErrorClass);
     const isValid = !inputs.some(isHasError);
-    console.log(isValid)
     this.classList.toggle(formInvalidClass, !isValid);
     this.classList.toggle(formValidClass, isValid);
     // if (isValid) this.submit();
